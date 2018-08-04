@@ -19,6 +19,6 @@ public class DataDS {
 
     private static Gson gson = new Gson();
 
-    public static final TypeAdapter<DataDS> JSON_DSDATA =
-            gson.getAdapter(DataDS.class);
+    public static final TypeAdapter<Data> JSON_DSDATA =
+            gson.getAdapter(Data.class);
 }

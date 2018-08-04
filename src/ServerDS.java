@@ -60,7 +60,9 @@ public class ServerDS extends Thread {
             while(!scanner.hasNext()){}
 
             try {
-                JSONObject j = new JSONObject(scanner.next());
+                String s = scanner.next();
+                System.out.println(s);
+                JSONObject j = new JSONObject(s);
                 System.out.println();
                 battery = j.getInt("Battery");
             }catch (JSONException x){
@@ -69,22 +71,28 @@ public class ServerDS extends Thread {
 
             while (working){
 
-                ps.println(getMessage());
+                ps.println(DataDS.JSON_DSDATA.toJson(getMessage()));
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException x){
                     x.printStackTrace();
                 }
             }
+
+            scanner.close();
+            ps.close();
+            input.close();
+            output.close();
+            socket.close();
         }catch (IOException x){
             x.printStackTrace();
         }
 
     }
 
-    public String getMessage(){
+    public DataDS.Data getMessage(){
         DataDS.Data d = new DataDS.Data(id, robotState, extra);
-        return ;
+        return d;
     }
 
     public void start(){
@@ -100,6 +108,10 @@ public class ServerDS extends Thread {
 
     public int getBattery(){
         return battery;
+    }
+
+    public void kill(){
+        working = false;
     }
 
     public void setRobotState(Events s){

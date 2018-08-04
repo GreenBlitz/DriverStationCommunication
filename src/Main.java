@@ -5,7 +5,11 @@ import java.net.ServerSocket;
  */
 public class Main {
     public static void main(String[] args) throws Exception{
-
+        ServerSocket serverSocket = new ServerSocket(2212);
+        ServerDS serverDS = ServerDS.init(0, serverSocket);
+        serverDS.start();
+        Thread.sleep(5000);
+        serverDS.kill();
     }
 
     public static <T> void print(T t ){
